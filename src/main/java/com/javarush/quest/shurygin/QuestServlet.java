@@ -1,9 +1,9 @@
-package com.example.textquest;
+package com.javarush.quest.shurygin;
 
 import java.io.*;
 
-import com.example.textquest.entity.Answer;
-import com.example.textquest.entity.Question;
+import com.javarush.quest.shurygin.entity.Answer;
+import com.javarush.quest.shurygin.entity.Question;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;

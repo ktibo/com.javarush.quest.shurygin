@@ -1,4 +1,4 @@
-package com.example.textquest.entity;
+package com.javarush.quest.shurygin.entity;
 
 public class Answer {
 

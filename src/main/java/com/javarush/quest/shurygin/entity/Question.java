@@ -1,7 +1,6 @@
-package com.example.textquest.entity;
+package com.javarush.quest.shurygin.entity;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Question {
