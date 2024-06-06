@@ -2,16 +2,12 @@ package com.javarush.quest.shurygin.entity;
 
 public class Answer {
 
-    private static final Answer FINAL_ANSWER = new Answer(null, "Заново");
+    public static final Answer FINAL_ANSWER = new Answer(null, "Заново");
     private static int currentID = 1;
 
     private Question question;
     private String text;
     private int id;
-
-    public static Answer getFinalAnswer() {
-        return FINAL_ANSWER;
-    }
 
     public String getText() {
         return text;

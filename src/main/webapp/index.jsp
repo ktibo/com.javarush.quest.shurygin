@@ -14,10 +14,11 @@
     <div class="py-5 text-center">
         <h1>${question.getText()}</h1>
         <hr class="my-5">
-
         <c:forEach var="answer" items="${question.getAnswers()}">
             <button class="btn btn-primary btn-lg" onclick="window.location='?answer=${answer.getId()}'" type="button">${answer.getText()}</button>
         </c:forEach>
+        <hr class="my-5">
+        <h4>Сыграно раз: ${games}</h4>
 
     </div>
 </div>

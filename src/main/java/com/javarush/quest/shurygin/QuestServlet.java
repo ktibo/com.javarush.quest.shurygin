@@ -1,12 +1,15 @@
 package com.javarush.quest.shurygin;
 
-import java.io.*;
-
 import com.javarush.quest.shurygin.entity.Answer;
 import com.javarush.quest.shurygin.entity.Question;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
+import java.io.IOException;
 
 @WebServlet(name = "questServlet", value = "")
 public class QuestServlet extends HttpServlet {
@@ -35,25 +38,27 @@ public class QuestServlet extends HttpServlet {
         HttpSession currentSession = request.getSession(true);
 
         int answerId = getSelectedAnswerId(request);
-       // System.out.println(answerId);
-        Question question = answerId == 0 ? startQuestion : getQuestionAttribute(currentSession);
+
+        Question question = startQuestion;
+        int games = 0;
+
+        if (answerId != 0) {
+            question = (Question) getAttribute(currentSession, "question");
+        }
+
+        games = getAttribute(currentSession, "games") == null ? 0 : (int) getAttribute(currentSession, "games");
 
         question = question.getQuestionByAnswerId(answerId);
+        if (question.isFinal()) games++;
 
         currentSession.setAttribute("question", question);
-
-       // System.out.println(question.getText());
+        currentSession.setAttribute("games", games);
 
         getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
     }
 
-    private Question getQuestionAttribute(HttpSession currentSession) {
-        Object fieldAttribute = currentSession.getAttribute("question");
-//        if (Question.class != fieldAttribute.getClass()) {
-//            currentSession.invalidate();
-//            throw new RuntimeException("Session is broken, try one more time");
-//        }
-        return (Question) fieldAttribute;
+    private Object getAttribute(HttpSession currentSession, String name) {
+        return currentSession.getAttribute(name);
     }
 
     private int getSelectedAnswerId(HttpServletRequest request) {

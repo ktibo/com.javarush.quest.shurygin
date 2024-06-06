@@ -2,13 +2,11 @@ package com.javarush.quest.shurygin.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Question {
 
-    private static int currentID;
-
     private List<Answer> answers = new ArrayList<>();
-    private int id;
     private String text;
 
     public List<Answer> getAnswers() {
@@ -25,9 +23,8 @@ public class Question {
 
     public Question(String text, boolean finalAnswer) {
         this.text = text;
-        id = currentID++;
         if (finalAnswer) {
-            answers.add(Answer.getFinalAnswer());
+            answers.add(Answer.FINAL_ANSWER);
         }
     }
 
@@ -36,12 +33,11 @@ public class Question {
     }
 
     public Question getQuestionByAnswerId(int answerId) {
+        Optional<Answer> any = getAnswers().stream().filter(answer -> answer.getId() == answerId).findAny();
+        return any.isEmpty() ? this : any.get().getQuestion();
+    }
 
-        for (Answer answer : getAnswers()) {
-            if (answer.getId() == answerId) return answer.getQuestion();
-        }
-
-        return this;
-
+    public boolean isFinal() {
+        return answers.size() == 1 && answers.get(0) == Answer.FINAL_ANSWER;
     }
 }
